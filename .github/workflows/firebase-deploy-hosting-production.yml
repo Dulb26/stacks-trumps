@@ -45,6 +45,5 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}"
           channelId: live
           projectId: "stacks-top-trumps"
-          target: "prod"
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
