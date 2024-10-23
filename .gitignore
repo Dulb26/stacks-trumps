@@ -46,3 +46,5 @@ yarn-error.log*
 # macOS
 # https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
 .DS_Store
+
+deleteme/**
