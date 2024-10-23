@@ -17,7 +17,7 @@ on:
       environment:
         description: "Environment"
         type: environment
-        default: "test"
+        default: "stacks-top-trumps"
         required: true
 
 env:
@@ -66,4 +66,4 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { name: "build" }
       - run: npm install -g firebase-tools
-      - run: firebase deploy --only hosting --project=${{ inputs.environment || 'test' }} --token=${{ secrets.FIREBASE_TOKEN }}
+      - run: firebase deploy --only hosting --project=${{ inputs.environment || 'stacks-top-trumps' }} --token=${{ secrets.FIREBASE_TOKEN }}
