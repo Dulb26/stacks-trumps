@@ -1,9 +1,13 @@
-name: Preview CI/CD
+name: Firebase Deploy Preview Channel Development
 
 on:
   pull_request:
-    branches: [main]
-    types: [opened, synchronize, labeled]
+    branches: [development]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
 
 env:
   NODE_VERSION: 20.5.x
