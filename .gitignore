@@ -7,7 +7,7 @@
 # Yarn package manager with PnP
 # https://yarnpkg.com/getting-started/qa/#which-files-should-be-gitignored
 .pnp.*
-.yarn/**
+.yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
