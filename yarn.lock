@@ -7318,6 +7318,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10/5beac1f30b5b40162532b8e2f7c3a4eb650910a2695e9c8512a62ffdc09dae93190c29db9107fa7f26d1b6c71aad3628ecb9b5de1ecb0911191099be109434d7
+  languageName: node
+  linkType: hard
+
 "pretty-format@npm:^29.7.0":
   version: 29.7.0
   resolution: "pretty-format@npm:29.7.0"
@@ -7840,34 +7849,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"root@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "root@workspace:."
-  dependencies:
-    "@emotion/babel-plugin": "npm:^11.11.0"
-    "@emotion/eslint-plugin": "npm:^11.11.0"
-    "@types/eslint": "npm:^8.56.2"
-    "@typescript-eslint/eslint-plugin": "npm:^7.0.1"
-    "@typescript-eslint/parser": "npm:^7.0.1"
-    eslint: "npm:^8.56.0"
-    eslint-config-prettier: "npm:^9.1.0"
-    eslint-import-resolver-typescript: "npm:^3.6.1"
-    eslint-plugin-import: "npm:^2.29.1"
-    eslint-plugin-jsx-a11y: "npm:^6.8.0"
-    eslint-plugin-react: "npm:^7.33.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    graphql: "npm:^16.8.1"
-    happy-dom: "npm:^13.3.8"
-    husky: "npm:^9.0.11"
-    prettier: "npm:^3.2.5"
-    react: "npm:^18.2.0"
-    relay-config: "npm:^12.0.1"
-    typescript: "npm:~5.3.3"
-    vite: "npm:~5.1.2"
-    vitest: "npm:~1.2.2"
-  languageName: unknown
-  linkType: soft
-
 "run-parallel@npm:^1.1.9":
   version: 1.2.0
   resolution: "run-parallel@npm:1.2.0"
@@ -8197,6 +8178,34 @@ __metadata:
   checksum: 10/2d4dc4e64e2db796de4a3c856d5943daccdfa3dd092e452a1ce059c81e9a9c29e0b9badba91b43ef0d5ff5c04ee62feb3bcc559a804e16faf447bac2d883aa99
   languageName: node
   linkType: hard
+
+"stacks-top-trumps@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "stacks-top-trumps@workspace:."
+  dependencies:
+    "@emotion/babel-plugin": "npm:^11.11.0"
+    "@emotion/eslint-plugin": "npm:^11.11.0"
+    "@types/eslint": "npm:^8.56.2"
+    "@typescript-eslint/eslint-plugin": "npm:^7.0.1"
+    "@typescript-eslint/parser": "npm:^7.0.1"
+    eslint: "npm:^8.56.0"
+    eslint-config-prettier: "npm:^9.1.0"
+    eslint-import-resolver-typescript: "npm:^3.6.1"
+    eslint-plugin-import: "npm:^2.29.1"
+    eslint-plugin-jsx-a11y: "npm:^6.8.0"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    graphql: "npm:^16.8.1"
+    happy-dom: "npm:^13.3.8"
+    husky: "npm:^9.0.11"
+    prettier: "npm:^3.3.3"
+    react: "npm:^18.2.0"
+    relay-config: "npm:^12.0.1"
+    typescript: "npm:~5.3.3"
+    vite: "npm:~5.1.2"
+    vitest: "npm:~1.2.2"
+  languageName: unknown
+  linkType: soft
 
 "stacktracey@npm:^2.1.8":
   version: 2.1.8

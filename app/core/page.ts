@@ -16,7 +16,7 @@ export function usePageEffect(
 
     document.title =
       location.pathname === "/"
-        ? options?.title ?? appName
+        ? (options?.title ?? appName)
         : options?.title
           ? `${options.title} - ${appName}`
           : appName;
