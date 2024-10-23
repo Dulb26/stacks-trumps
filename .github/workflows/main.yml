@@ -10,8 +10,6 @@ on:
       - "v*"
   pull_request:
     branches: [main]
-  schedule:
-    - cron: "0 7 * * *"
   workflow_dispatch:
     inputs:
       environment:
@@ -56,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     environment:
-      name: ${{ inputs.environment || 'test' }}
+      name: ${{ inputs.environment || 'stacks-top-trumps' }}
       url: ${{ inputs.environment == 'prod' && 'https://example.com' || format('https://{0}.example.com', inputs.environment || 'test') }}
     steps:
       - uses: actions/checkout@v4
@@ -66,4 +64,19 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { name: "build" }
       - run: npm install -g firebase-tools
-      - run: firebase deploy --only hosting --project=${{ inputs.environment || 'stacks-top-trumps' }} --token=${{ secrets.FIREBASE_TOKEN }}
+      - name: Create SA key
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}' > $HOME/gcloud.json
+          else
+            echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}' > $HOME/gcloud.json
+          fi
+      - name: Deploy to Firebase
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            firebase deploy --only hosting:prod --project=stacks-top-trumps --json
+          else
+            firebase deploy --only hosting:dev --project=stacks-top-trumps-dev --json
+          fi
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud.json
