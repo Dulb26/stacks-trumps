@@ -2,6 +2,7 @@ import { ExpandMoreRounded, NotificationsRounded } from "@mui/icons-material";
 import { Box, BoxProps, Button, IconButton } from "@mui/joy";
 import { Fragment, Suspense } from "react";
 import { ColorSchemeButton } from "./button-color-scheme";
+import { WalletConnectButton } from "./wallet-connect-button";
 
 export function Toolbar(props: ToolbarProps): JSX.Element {
   const { sx, ...other } = props;
@@ -32,6 +33,8 @@ export function Toolbar(props: ToolbarProps): JSX.Element {
       <Suspense>
         <ActionButtons />
       </Suspense>
+
+      <WalletConnectButton />
     </Box>
   );
 }

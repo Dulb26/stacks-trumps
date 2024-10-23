@@ -16,7 +16,6 @@ interface AuthPayload {
 
 export function WalletConnectButton() {
   const [address, setAddress] = useState<string | null>(null);
-  const [nftCount, setNftCount] = useState<number | null>(null);
   const [userSession, setUserSession] = useState<UserSession | null>(null);
 
   const onFinish = useCallback(
@@ -29,7 +28,7 @@ export function WalletConnectButton() {
           // const holdings = await getNFTHoldings(
           //   payload.authResponsePayload.profile.stxAddress.mainnet,
           // );
-          setNftCount(0);
+          // setNftCount(0);
         } catch (error) {
           console.error("Error fetching NFT holdings:", error);
         }
@@ -48,7 +47,7 @@ export function WalletConnectButton() {
       redirectTo: "/",
       userSession: newUserSession,
       appDetails: {
-        name: "Dulb Test",
+        name: "Stacks Top Trumps",
         icon: "https://your-app-icon-url.com/icon.png",
       },
     });
@@ -59,7 +58,7 @@ export function WalletConnectButton() {
       userSession.signUserOut("/");
     }
     setAddress(null);
-    setNftCount(null);
+    // setNftCount(null);
     setUserSession(null);
   };
 
@@ -88,12 +87,6 @@ export function WalletConnectButton() {
         </Button>
       ) : (
         <>
-          <p style={{ fontSize: "14px" }}>
-            Connected: {address.slice(0, 6)}...{address.slice(-4)}
-          </p>
-          {nftCount !== null && (
-            <p style={{ fontSize: "14px" }}>Total NFTs: {nftCount}</p>
-          )}
           <Button
             onClick={handleDisconnect}
             style={{
