@@ -2,7 +2,8 @@ name: Firebase Deploy Preview Channel Development
 
 on:
   pull_request:
-    branches: [development]
+    branches: [main]
+    types: [opened, synchronize, labeled]
 
 permissions:
   contents: read
