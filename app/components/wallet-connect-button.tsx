@@ -1,8 +1,8 @@
 import { Box, Button } from "@mui/joy";
 import { showConnect } from "@stacks/connect";
 import { UserSession } from "@stacks/connect-react";
+import { getAuth, signInWithCustomToken } from "firebase/auth";
 import { useCallback, useState } from "react";
-// import { getNFTHoldings } from "../api/stacksApi";
 
 interface AuthPayload {
   authResponsePayload?: {
@@ -10,36 +10,94 @@ interface AuthPayload {
       stxAddress?: {
         mainnet?: string;
       };
+      publicKeys?: string[];
     };
   };
 }
 
+interface ExtendedUserSession extends UserSession {
+  signMessage(message: string): Promise<{
+    publicKey: string;
+    signature: string;
+  }>;
+}
+
 export function WalletConnectButton() {
   const [address, setAddress] = useState<string | null>(null);
-  const [userSession, setUserSession] = useState<UserSession | null>(null);
+  const [userSession, setUserSession] = useState<ExtendedUserSession | null>(
+    null,
+  );
+
+  const handleDisconnect = useCallback(() => {
+    if (userSession) {
+      userSession.signUserOut("/");
+    }
+    setAddress(null);
+    setUserSession(null);
+    const auth = getAuth();
+    auth.signOut();
+  }, [userSession]);
 
   const onFinish = useCallback(
     async (payload: AuthPayload) => {
-      setAddress(
-        payload.authResponsePayload?.profile?.stxAddress?.mainnet ?? null,
-      );
-      if (payload.authResponsePayload?.profile?.stxAddress?.mainnet) {
-        try {
-          // const holdings = await getNFTHoldings(
-          //   payload.authResponsePayload.profile.stxAddress.mainnet,
-          // );
-          // setNftCount(0);
-        } catch (error) {
-          console.error("Error fetching NFT holdings:", error);
-        }
+      const walletAddress =
+        payload.authResponsePayload?.profile?.stxAddress?.mainnet;
+
+      if (!walletAddress) {
+        console.error("Missing wallet address");
+        return;
       }
-      setUserSession(new UserSession());
+
+      setAddress(walletAddress);
+      const newUserSession = new UserSession() as ExtendedUserSession;
+      setUserSession(newUserSession);
+
+      try {
+        // Get nonce
+        const nonceResponse = await fetch("/api/getNonceToSign", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            address: walletAddress,
+            blockchain: "stacks",
+          }),
+        });
+
+        const { nonce } = await nonceResponse.json();
+
+        // Sign message using Stacks wallet
+        const signatureResponse = await newUserSession.signMessage(nonce);
+
+        // Verify signature
+        const verifyResponse = await fetch("/api/verifySignedMessage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            address: walletAddress,
+            publicKey: signatureResponse?.publicKey,
+            signature: signatureResponse?.signature,
+          }),
+        });
+
+        if (!verifyResponse.ok) {
+          throw new Error("Signature verification failed");
+        }
+
+        const { token } = await verifyResponse.json();
+
+        // Sign in to Firebase with custom token
+        const auth = getAuth();
+        await signInWithCustomToken(auth, token);
+      } catch (error) {
+        console.error("Error during signature verification:", error);
+        handleDisconnect();
+      }
     },
-    [setAddress],
+    [handleDisconnect],
   );
 
   const handleOpenAuth = () => {
-    const newUserSession = new UserSession();
+    const newUserSession = new UserSession() as ExtendedUserSession;
     setUserSession(newUserSession);
     showConnect({
       onFinish,
@@ -51,15 +109,6 @@ export function WalletConnectButton() {
         icon: "https://your-app-icon-url.com/icon.png",
       },
     });
-  };
-
-  const handleDisconnect = () => {
-    if (userSession) {
-      userSession.signUserOut("/");
-    }
-    setAddress(null);
-    // setNftCount(null);
-    setUserSession(null);
   };
 
   return (
@@ -86,21 +135,19 @@ export function WalletConnectButton() {
           Connect Wallet
         </Button>
       ) : (
-        <>
-          <Button
-            onClick={handleDisconnect}
-            style={{
-              padding: "8px 16px",
-              fontWeight: "bold",
-              color: "white",
-              backgroundColor: "#ef4444",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Disconnect
-          </Button>
-        </>
+        <Button
+          onClick={handleDisconnect}
+          style={{
+            padding: "8px 16px",
+            fontWeight: "bold",
+            color: "white",
+            backgroundColor: "#ef4444",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Disconnect
+        </Button>
       )}
     </Box>
   );

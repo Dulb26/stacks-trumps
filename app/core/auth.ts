@@ -19,7 +19,7 @@ export const currentUser = atom<Promise<User | null> | User | null>(
 
 currentUser.debugLabel = "currentUser";
 
-const unsubscribe = auth.onAuthStateChanged((user) => {
+const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
   store.set(currentUser, user);
 });
 
