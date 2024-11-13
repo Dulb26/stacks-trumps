@@ -3,6 +3,10 @@ import { showConnect } from "@stacks/connect";
 import { UserSession } from "@stacks/connect-react";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
 import { useCallback, useState } from "react";
+import {
+  getNonceToSign,
+  verifySignedMessage,
+} from "../core/firebase-functions";
 
 interface AuthPayload {
   authResponsePayload?: {
@@ -54,36 +58,20 @@ export function WalletConnectButton() {
 
       try {
         // Get nonce
-        const nonceResponse = await fetch("/api/getNonceToSign", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            address: walletAddress,
-            blockchain: "stacks",
-          }),
+        const { nonce } = await getNonceToSign({
+          address: walletAddress,
+          blockchain: "stacks",
         });
-
-        const { nonce } = await nonceResponse.json();
 
         // Sign message using Stacks wallet
         const signatureResponse = await newUserSession.signMessage(nonce);
 
         // Verify signature
-        const verifyResponse = await fetch("/api/verifySignedMessage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            address: walletAddress,
-            publicKey: signatureResponse?.publicKey,
-            signature: signatureResponse?.signature,
-          }),
+        const { token } = await verifySignedMessage({
+          address: walletAddress,
+          publicKey: signatureResponse?.publicKey,
+          signature: signatureResponse?.signature,
         });
-
-        if (!verifyResponse.ok) {
-          throw new Error("Signature verification failed");
-        }
-
-        const { token } = await verifyResponse.json();
 
         // Sign in to Firebase with custom token
         const auth = getAuth();
