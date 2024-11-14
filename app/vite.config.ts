@@ -3,10 +3,9 @@ import { URL, fileURLToPath } from "node:url";
 import { loadEnv } from "vite";
 import { defineProject } from "vitest/config";
 
-const publicEnvVars = [
-  "APP_NAME",
-  "GOOGLE_CLOUD_PROJECT",
-  "AUTO_INIT",
+const publicEnvVars = ["APP_NAME", "GOOGLE_CLOUD_PROJECT", "AUTO_INIT"];
+
+const optionalEnvVars = [
   "FIREBASE_APP_ID",
   "FIREBASE_API_KEY",
   "FIREBASE_AUTH_DOMAIN",
@@ -24,9 +23,17 @@ export default defineProject(async ({ mode }) => {
   const envDir = fileURLToPath(new URL("..", import.meta.url));
   const env = loadEnv(mode, envDir, "");
 
+  // Check required env vars
   publicEnvVars.forEach((key) => {
     if (!env[key]) throw new Error(`Missing environment variable: ${key}`);
     process.env[`VITE_${key}`] = env[key];
+  });
+
+  // Add optional env vars if they exist
+  optionalEnvVars.forEach((key) => {
+    if (env[key]) {
+      process.env[`VITE_${key}`] = env[key];
+    }
   });
 
   return {
