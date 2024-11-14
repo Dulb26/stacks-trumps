@@ -14,6 +14,7 @@ const publicEnvVars = [
   "FIREBASE_MESSAGING_SENDER_ID",
   "GA_MEASUREMENT_ID",
   "FIREBASE_REGION",
+  "AUTO_INIT",
 ];
 
 /**

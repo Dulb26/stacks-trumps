@@ -50,7 +50,6 @@ class Firebase {
         appId: import.meta.env.VITE_FIREBASE_APP_ID,
         measurementId: import.meta.env.VITE_GA_MEASUREMENT_ID,
       };
-      console.log("firebaseConfig", firebaseConfig);
       this.app = initializeApp(firebaseConfig);
       initializeFirestore(this.app, { experimentalForceLongPolling: true });
       this.auth = getAuth(this.app);
