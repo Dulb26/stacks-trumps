@@ -33,9 +33,19 @@ export async function getNonceToSign(
 export async function verifySignedMessage(
   args: VerifySignedMessageArgs,
 ): Promise<VerifySignedMessageResponse> {
-  const response = await axios.post(
-    `https://verifysignedmessage-sbc2p4gjcq-uc.a.run.app`,
-    args,
-  );
-  return response.data;
+  try {
+    const response = await axios.post(
+      "https://verifysignedmessage-sbc2p4gjcq-uc.a.run.app/",
+      args,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error verifying signed message:", error);
+    throw error;
+  }
 }

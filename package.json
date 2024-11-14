@@ -16,7 +16,8 @@
     "test": "vitest",
     "build": "yarn workspaces foreach -tiA run build",
     "deploy": "yarn workspace edge deploy",
-    "format": "prettier --write ."
+    "format": "prettier --write . && eslint --ext .js,.ts . --fix",
+    "type-check": "tsc --build"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
