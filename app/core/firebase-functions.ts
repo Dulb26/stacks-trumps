@@ -1,4 +1,6 @@
 import axios from "axios";
+import { httpsCallable } from "firebase/functions";
+import Firebase from "./firebase";
 
 interface GetNonceArgs {
   address: string;
@@ -20,6 +22,13 @@ interface VerifySignedMessageResponse {
   token: string;
 }
 
+interface GetUserNftsArgs {
+  userId: string;
+  limit?: number;
+  offset?: number;
+  includeStaked?: boolean;
+}
+
 export async function getNonceToSign(
   args: GetNonceArgs,
 ): Promise<GetNonceResponse> {
@@ -36,6 +45,7 @@ export async function verifySignedMessage(
   try {
     const response = await axios.post(
       "https://verifysignedmessage-sbc2p4gjcq-uc.a.run.app/",
+      // "http://127.0.0.1:5001/stacks-top-trumps/us-central1/verifySignedMessage",
       args,
       {
         headers: {
@@ -48,4 +58,9 @@ export async function verifySignedMessage(
     console.error("Error verifying signed message:", error);
     throw error;
   }
+}
+
+export async function getUserNfts(args: GetUserNftsArgs) {
+  const nfts = httpsCallable(Firebase.getFnsApp(), "getUserNfts");
+  return await nfts(args);
 }

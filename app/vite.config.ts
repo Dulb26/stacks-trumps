@@ -8,6 +8,7 @@ const publicEnvVars = [
   "GOOGLE_CLOUD_PROJECT",
   "AUTO_INIT",
   "FIREBASE_MEASUREMENT_ID",
+  "APP_API_URL",
 ];
 
 const optionalEnvVars = [

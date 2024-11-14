@@ -12,6 +12,7 @@ import {
   getNonceToSign,
   verifySignedMessage,
 } from "../core/firebase-functions";
+import { useUserNfts } from "./useUserNfts";
 
 interface AuthPayload {
   authResponsePayload?: {
@@ -25,9 +26,10 @@ interface AuthPayload {
 }
 
 export function useWalletAuth() {
-  const [address, setAddress] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [userSession, setUserSession] = useState<UserSession | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const { nfts, isLoading: isLoadingNfts } = useUserNfts(userId);
 
   useEffect(() => {
     const auth = getAuth();
@@ -35,7 +37,7 @@ export function useWalletAuth() {
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setAddress(user.uid);
+        setUserId(user.uid);
         setUserSession(new UserSession());
       }
     });
@@ -47,7 +49,7 @@ export function useWalletAuth() {
     if (userSession) {
       userSession.signUserOut("/");
     }
-    setAddress(null);
+    setUserId(null);
     setUserSession(null);
     const auth = getAuth();
     auth.signOut();
@@ -99,7 +101,7 @@ export function useWalletAuth() {
         const { token } = await verifySignedMessage(verificationData);
         const auth = getAuth();
         await signInWithCustomToken(auth, token);
-        setAddress(walletAddress);
+        setUserId(walletAddress);
         const newUserSession = new UserSession();
         setUserSession(newUserSession);
       } catch (error) {
@@ -128,9 +130,11 @@ export function useWalletAuth() {
   }, [onFinish]);
 
   return {
-    address,
+    userId,
     handleOpenAuth,
     handleDisconnect,
     isAuthenticating,
+    nfts,
+    isLoadingNfts,
   };
 }

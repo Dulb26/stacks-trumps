@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/joy";
 import { useWalletAuth } from "../hooks/useWalletAuth";
 
 export function WalletConnectButton() {
-  const { address, handleOpenAuth, handleDisconnect, isAuthenticating } =
+  const { userId, handleOpenAuth, handleDisconnect, isAuthenticating } =
     useWalletAuth();
 
   return (
@@ -14,7 +14,7 @@ export function WalletConnectButton() {
         gap: "16px",
       }}
     >
-      {!address ? (
+      {!userId ? (
         <Button
           onClick={handleOpenAuth}
           disabled={isAuthenticating}
