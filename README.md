@@ -44,7 +44,6 @@ GOOGLE_CLOUD_PROJECT=your-project-id
 FIREBASE_APP_ID=your-app-id
 FIREBASE_API_KEY=your-api-key
 FIREBASE_AUTH_DOMAIN=your-domain
-GA_MEASUREMENT_ID=your-ga-id
 ```
 
 4. Start the development server:
