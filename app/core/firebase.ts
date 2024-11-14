@@ -23,9 +23,11 @@ class Firebase {
 
   initApp = new Promise((resolve, reject) => {
     if (import.meta.env.VITE_AUTO_INIT === "true") {
+      console.log("auto init");
       axios
         .get(`/__/firebase/init.json`)
         .then((res) => {
+          console.log("res", res.data);
           this.app = initializeApp(res.data);
           initializeFirestore(this.app, { experimentalForceLongPolling: true });
           this.auth = getAuth(this.app);
