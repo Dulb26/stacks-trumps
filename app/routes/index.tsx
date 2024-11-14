@@ -16,7 +16,6 @@ export const router = createBrowserRouter([
     element: <BaseLayout />,
     errorElement: <RootError />,
     children: [
-      { path: "login", lazy: () => import("./login") },
       { path: "privacy", lazy: () => import("./privacy") },
       { path: "terms", lazy: () => import("./terms") },
     ],

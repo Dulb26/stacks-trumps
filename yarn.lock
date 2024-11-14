@@ -2896,6 +2896,7 @@ __metadata:
     "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:^18.2.19"
     "@vitejs/plugin-react": "npm:^4.2.1"
+    axios: "npm:^1.7.7"
     envars: "npm:^1.0.2"
     firebase: "npm:^10.8.0"
     happy-dom: "npm:^13.3.8"
@@ -3105,6 +3106,17 @@ __metadata:
   version: 4.7.0
   resolution: "axe-core@npm:4.7.0"
   checksum: 10/615c0f7722c3c9fcf353dbd70b00e2ceae234d4c17cbc839dd85c01d16797c4e4da45f8d27c6118e9e6b033fb06efd196106e13651a1b2f3a10e0f11c7b2f660
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/7f875ea13b9298cd7b40fd09985209f7a38d38321f1118c701520939de2f113c4ba137832fe8e3f811f99a38e12c8225481011023209a77b0c0641270e20cde1
   languageName: node
   linkType: hard
 
@@ -3498,7 +3510,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"combined-stream@npm:^1.0.6":
+"combined-stream@npm:^1.0.6, combined-stream@npm:^1.0.8":
   version: 1.0.8
   resolution: "combined-stream@npm:1.0.8"
   dependencies:
@@ -4898,6 +4910,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.9
+  resolution: "follow-redirects@npm:1.15.9"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10/e3ab42d1097e90d28b913903841e6779eb969b62a64706a3eb983e894a5db000fbd89296f45f08885a0e54cd558ef62e81be1165da9be25a6c44920da10f424c
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -4932,6 +4954,17 @@ __metadata:
     combined-stream: "npm:^1.0.6"
     mime-types: "npm:^2.1.12"
   checksum: 10/2e2e5e927979ba3623f9b4c4bcc939275fae3f2dea9dafc8db3ca656a3d75476605de2c80f0e6f1487987398e056f0b4c738972d6e1edd83392d5686d0952eed
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "form-data@npm:4.0.1"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    mime-types: "npm:^2.1.12"
+  checksum: 10/6adb1cff557328bc6eb8a68da205f9ae44ab0e88d4d9237aaf91eed591ffc64f77411efb9016af7d87f23d0a038c45a788aa1c6634e51175c4efa36c2bc53774
   languageName: node
   linkType: hard
 
@@ -7246,6 +7279,13 @@ __metadata:
     "@types/node": "npm:>=13.7.0"
     long: "npm:^5.0.0"
   checksum: 10/81ab853d28c71998d056d6b34f83c4bc5be40cb0b416585f99ed618aed833d64b2cf89359bad7474d345302f2b5e236c4519165f8483d7ece7fd5b0d9ac13f8b
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: 10/f0bb4a87cfd18f77bc2fba23ae49c3b378fb35143af16cc478171c623eebe181678f09439707ad80081d340d1593cd54a33a0113f3ccb3f4bc9451488780ee23
   languageName: node
   linkType: hard
 

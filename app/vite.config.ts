@@ -9,7 +9,11 @@ const publicEnvVars = [
   "FIREBASE_APP_ID",
   "FIREBASE_API_KEY",
   "FIREBASE_AUTH_DOMAIN",
+  "FIREBASE_PROJECT_ID",
+  "FIREBASE_STORAGE_BUCKET",
+  "FIREBASE_MESSAGING_SENDER_ID",
   "GA_MEASUREMENT_ID",
+  "FIREBASE_REGION",
 ];
 
 /**
@@ -53,7 +57,10 @@ export default defineProject(async ({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: process.env.LOCAL_API_ORIGIN ?? process.env.API_ORIGIN,
+          target:
+            mode === "development"
+              ? "http://127.0.0.1:5001" // Firebase Functions emulator default port
+              : `https://${env.FIREBASE_REGION}-${env.GOOGLE_CLOUD_PROJECT}.cloudfunctions.net`,
           changeOrigin: true,
         },
       },
