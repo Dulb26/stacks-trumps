@@ -1,6 +1,5 @@
 import axios from "axios";
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { ReCaptchaV3Provider, initializeAppCheck } from "firebase/app-check";
 import { Auth, getAuth } from "firebase/auth";
 import {
   Firestore,
@@ -27,18 +26,18 @@ class Firebase {
       axios
         .get(`/__/firebase/init.json`)
         .then((res) => {
-          console.log("res", res.data);
+          res.data.measurementId = import.meta.env.VITE_FIREBASE_MEASUREMENT_ID;
           this.app = initializeApp(res.data);
           initializeFirestore(this.app, { experimentalForceLongPolling: true });
           this.auth = getAuth(this.app);
           this.db = getFirestore(this.app);
           this.fns = getFunctions(this.app);
-          initializeAppCheck(this.app, {
-            provider: new ReCaptchaV3Provider(
-              import.meta.env.VITE_CAPTCHA_SITE_KEY!,
-            ),
-            isTokenAutoRefreshEnabled: true,
-          });
+          // initializeAppCheck(this.app, {
+          //   provider: new ReCaptchaV3Provider(
+          //     import.meta.env.VITE_CAPTCHA_SITE_KEY!,
+          //   ),
+          //   isTokenAutoRefreshEnabled: true,
+          // });
           resolve(this.app);
         })
         .catch(reject);

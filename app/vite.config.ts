@@ -3,7 +3,12 @@ import { URL, fileURLToPath } from "node:url";
 import { loadEnv } from "vite";
 import { defineProject } from "vitest/config";
 
-const publicEnvVars = ["APP_NAME", "GOOGLE_CLOUD_PROJECT", "AUTO_INIT"];
+const publicEnvVars = [
+  "APP_NAME",
+  "GOOGLE_CLOUD_PROJECT",
+  "AUTO_INIT",
+  "FIREBASE_MEASUREMENT_ID",
+];
 
 const optionalEnvVars = [
   "FIREBASE_APP_ID",
