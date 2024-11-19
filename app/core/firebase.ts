@@ -12,7 +12,7 @@ class Firebase {
   environment = {
     production: true,
     language: "en",
-    api: import.meta.env.VITE_API_URL,
+    api: import.meta.env.VITE_APP_API_URL,
   };
 
   app!: FirebaseApp;
@@ -22,7 +22,6 @@ class Firebase {
 
   initApp = new Promise((resolve, reject) => {
     if (import.meta.env.VITE_AUTO_INIT === "true") {
-      console.log("auto init");
       axios
         .get(`/__/firebase/init.json`)
         .then((res) => {

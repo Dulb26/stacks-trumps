@@ -19,6 +19,7 @@ interface ImportMetaEnv {
   readonly VITE_API_URL?: string;
   readonly VITE_CAPTCHA_SITE_KEY?: string;
   readonly VITE_FIREBASE_REGION?: string;
+  readonly VITE_APP_API_URL?: string;
 }
 
 declare module "relay-runtime" {
