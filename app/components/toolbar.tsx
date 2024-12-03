@@ -1,6 +1,13 @@
-import { ExpandMoreRounded, NotificationsRounded } from "@mui/icons-material";
+import {
+  AddCircleOutline,
+  ExpandMoreRounded,
+  NotificationsRounded,
+} from "@mui/icons-material";
 import { Box, BoxProps, Button, IconButton } from "@mui/joy";
-import { Fragment, Suspense } from "react";
+import { Fragment, Suspense, useState } from "react";
+import { useIsAdmin } from "../hooks/useIsAdmin";
+import { useWalletAuth } from "../hooks/useWalletAuth";
+import { AddCollectionDialog } from "./add-collection-dialog";
 import { ColorSchemeButton } from "./button-color-scheme";
 import { WalletConnectButton } from "./wallet-connect-button";
 
@@ -40,7 +47,9 @@ export function Toolbar(props: ToolbarProps): JSX.Element {
 }
 
 function ActionButtons(): JSX.Element {
-  // const user = useCurrentUser();
+  const { userId } = useWalletAuth();
+  const { isAdmin } = useIsAdmin(userId);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <Fragment>
@@ -49,6 +58,24 @@ function ActionButtons(): JSX.Element {
       <IconButton variant="soft" size="sm">
         <NotificationsRounded />
       </IconButton>
+
+      {isAdmin && (
+        <>
+          <Button
+            variant="soft"
+            size="sm"
+            color="primary"
+            startDecorator={<AddCircleOutline />}
+            onClick={() => setIsDialogOpen(true)}
+          >
+            Add Collection
+          </Button>
+          <AddCollectionDialog
+            open={isDialogOpen}
+            onClose={() => setIsDialogOpen(false)}
+          />
+        </>
+      )}
     </Fragment>
   );
 }
