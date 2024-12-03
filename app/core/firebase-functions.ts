@@ -29,6 +29,11 @@ interface GetUserNftsArgs {
   includeStaked?: boolean;
 }
 
+interface AddSupportedCollectionArgs {
+  slug: string;
+  blockchain: string;
+}
+
 export async function getNonceToSign(
   args: GetNonceArgs,
 ): Promise<GetNonceResponse> {
@@ -63,4 +68,12 @@ export async function verifySignedMessage(
 export async function getUserNfts(args: GetUserNftsArgs) {
   const nfts = httpsCallable(Firebase.getFnsApp(), "getUserNfts");
   return await nfts(args);
+}
+
+export async function addSupportedCollection(args: AddSupportedCollectionArgs) {
+  const addCollection = httpsCallable(
+    Firebase.getFnsApp(),
+    "addSupportedCollection",
+  );
+  return await addCollection(args);
 }
